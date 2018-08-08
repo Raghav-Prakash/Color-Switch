@@ -26,6 +26,8 @@ class GameScene: SKScene {
 		slowDownGravityInScene()
 		
 		addSpriteNodesToView()
+		
+		setSelfAsContactDelegate()
     }
 	
 	//MARK: - Set background color and set up colorCircle and ball in the Scene view.
@@ -67,5 +69,21 @@ class GameScene: SKScene {
 	func addSpriteNodesToView() {
 		self.addChild(colorCircle)
 		self.addChild(ball)
+	}
+	
+	//MARK: - Set self view as the delegate for the physics contact protocol
+	func setSelfAsContactDelegate() {
+		self.physicsWorld.contactDelegate = self
+	}
+}
+
+extension GameScene : SKPhysicsContactDelegate {
+	
+	func didBegin(_ contact: SKPhysicsContact) {
+		let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask // bodyA : ball, bodyB : colorCircle
+		
+		if contactMask == PhysicsCategories.ballCategory | PhysicsCategories.switchCategory {
+			print("Ball has made contact with the colorCircle")
+		}
 	}
 }
