@@ -37,6 +37,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0235B76211B81BB008F317E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A0FD266B211A37EF00B856E7 /* GameViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A0235B77211B81CC008F317E /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				A0FD2663211A37EF00B856E7 /* AppDelegate.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		A0235B78211B81DB008F317E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				A0FD2669211A37EF00B856E7 /* GameScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		A0235B79211B81E9008F317E /* UI and Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A0FD266D211A37EF00B856E7 /* Main.storyboard */,
+				A0FD2670211A37EF00B856E7 /* Assets.xcassets */,
+				A0FD2672211A37EF00B856E7 /* LaunchScreen.storyboard */,
+			);
+			path = "UI and Assets";
+			sourceTree = "<group>";
+		};
 		A0FD2657211A37EF00B856E7 = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +90,11 @@
 		A0FD2662211A37EF00B856E7 /* Color Switch */ = {
 			isa = PBXGroup;
 			children = (
-				A0FD2663211A37EF00B856E7 /* AppDelegate.swift */,
-				A0FD2669211A37EF00B856E7 /* GameScene.swift */,
-				A0FD266B211A37EF00B856E7 /* GameViewController.swift */,
-				A0FD266D211A37EF00B856E7 /* Main.storyboard */,
-				A0FD2670211A37EF00B856E7 /* Assets.xcassets */,
-				A0FD2672211A37EF00B856E7 /* LaunchScreen.storyboard */,
 				A0FD2675211A37EF00B856E7 /* Info.plist */,
+				A0235B79211B81E9008F317E /* UI and Assets */,
+				A0235B78211B81DB008F317E /* Scenes */,
+				A0235B77211B81CC008F317E /* Template */,
+				A0235B76211B81BB008F317E /* ViewController */,
 			);
 			path = "Color Switch";
 			sourceTree = "<group>";
