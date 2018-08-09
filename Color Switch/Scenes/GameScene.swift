@@ -101,11 +101,13 @@ class GameScene: SKScene {
 		ball.physicsBody!.collisionBitMask = PhysicsCategories.none
 	}
 	
-	//MARK: - Slow down the fall speed in the gravity of the scene.
+	//MARK: - Slow down the fall speed in the gravity of the scene and update gravity fall when score increases by 5.
 	func slowDownGravityInScene() {
 		self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
 	}
-	
+	func updateGravityInScene() {
+		self.physicsWorld.gravity.dy -= 1.0
+	}
 	//MARK: - Set self view as the delegate for the physics contact protocol
 	func setSelfAsContactDelegate() {
 		self.physicsWorld.contactDelegate = self
@@ -118,7 +120,9 @@ class GameScene: SKScene {
 		colorCircle.run(SKAction.rotate(byAngle: .pi/2, duration: 0.25))
 	}
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		turnColorSwitchWheel()
+		self.run(SKAction.playSoundFileNamed("Tap", waitForCompletion: false)) {
+			self.turnColorSwitchWheel()
+		}
 	}
 	
 	//MARK: - When the ball color and colorSwitch color don't match
@@ -146,6 +150,11 @@ class GameScene: SKScene {
 	//MARK: - When the ball color and colorSwitch color match, update score
 	func updateScoreLabel(with score: Int) {
 		scoreLabel.text = "\(score)"
+		
+		// Update gravity fall
+		if score % 5 == 0 {
+			updateGravityInScene()
+		}
 	}
 }
 
@@ -159,6 +168,8 @@ extension GameScene : SKPhysicsContactDelegate {
 			// And if so, which object is our "ball" (bodyA or bodyB)
 			if let ball = contact.bodyA.node?.name == "ball" ? contact.bodyA.node : contact.bodyB.node {
 				if currentColorSwitchState == currentColorIndex {
+					self.run(SKAction.playSoundFileNamed("bling", waitForCompletion: false))
+					
 					score += 1
 					updateScoreLabel(with: score)
 					
@@ -170,7 +181,9 @@ extension GameScene : SKPhysicsContactDelegate {
 						self.addPhysicsToBall()
 					})
 				} else {
-					gameOver()
+					self.run(SKAction.playSoundFileNamed("game-over", waitForCompletion: false), completion: {
+						self.gameOver()
+					})
 				}
 			}
 		}

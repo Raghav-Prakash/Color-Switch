@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A028C3F5211CD5D600C3FCC5 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A028C3F4211CD5D600C3FCC5 /* MenuScene.swift */; };
+		A028C3F7211CEDCE00C3FCC5 /* bling.wav in Resources */ = {isa = PBXBuildFile; fileRef = A028C3F6211CEDCD00C3FCC5 /* bling.wav */; };
+		A028C3F9211CF02500C3FCC5 /* game-over.wav in Resources */ = {isa = PBXBuildFile; fileRef = A028C3F8211CF02400C3FCC5 /* game-over.wav */; };
+		A028C3FB211CF24300C3FCC5 /* Tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = A028C3FA211CF24300C3FCC5 /* Tap.wav */; };
 		A06C3AD7211B908A00DEF78B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C3AD6211B908A00DEF78B /* Settings.swift */; };
 		A0FD2664211A37EF00B856E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD2663211A37EF00B856E7 /* AppDelegate.swift */; };
 		A0FD266A211A37EF00B856E7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD2669211A37EF00B856E7 /* GameScene.swift */; };
@@ -19,6 +22,9 @@
 
 /* Begin PBXFileReference section */
 		A028C3F4211CD5D600C3FCC5 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		A028C3F6211CEDCD00C3FCC5 /* bling.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bling.wav; sourceTree = "<group>"; };
+		A028C3F8211CF02400C3FCC5 /* game-over.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "game-over.wav"; sourceTree = "<group>"; };
+		A028C3FA211CF24300C3FCC5 /* Tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tap.wav; sourceTree = "<group>"; };
 		A06C3AD6211B908A00DEF78B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A0FD2660211A37EF00B856E7 /* Color Switch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Switch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FD2663211A37EF00B856E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +102,9 @@
 		A0FD2662211A37EF00B856E7 /* Color Switch */ = {
 			isa = PBXGroup;
 			children = (
+				A028C3F6211CEDCD00C3FCC5 /* bling.wav */,
+				A028C3F8211CF02400C3FCC5 /* game-over.wav */,
+				A028C3FA211CF24300C3FCC5 /* Tap.wav */,
 				A0FD2675211A37EF00B856E7 /* Info.plist */,
 				A0235B79211B81E9008F317E /* UI and Assets */,
 				A0235B78211B81DB008F317E /* Scenes */,
@@ -164,7 +173,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A028C3FB211CF24300C3FCC5 /* Tap.wav in Resources */,
 				A0FD266F211A37EF00B856E7 /* Main.storyboard in Resources */,
+				A028C3F7211CEDCE00C3FCC5 /* bling.wav in Resources */,
+				A028C3F9211CF02500C3FCC5 /* game-over.wav in Resources */,
 				A0FD2671211A37EF00B856E7 /* Assets.xcassets in Resources */,
 				A0FD2674211A37EF00B856E7 /* LaunchScreen.storyboard in Resources */,
 			);
