@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A028C3F5211CD5D600C3FCC5 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A028C3F4211CD5D600C3FCC5 /* MenuScene.swift */; };
 		A06C3AD7211B908A00DEF78B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06C3AD6211B908A00DEF78B /* Settings.swift */; };
 		A0FD2664211A37EF00B856E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD2663211A37EF00B856E7 /* AppDelegate.swift */; };
 		A0FD266A211A37EF00B856E7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD2669211A37EF00B856E7 /* GameScene.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A028C3F4211CD5D600C3FCC5 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A06C3AD6211B908A00DEF78B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A0FD2660211A37EF00B856E7 /* Color Switch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Switch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FD2663211A37EF00B856E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				A0FD2669211A37EF00B856E7 /* GameScene.swift */,
+				A028C3F4211CD5D600C3FCC5 /* MenuScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			files = (
 				A0FD266A211A37EF00B856E7 /* GameScene.swift in Sources */,
 				A0FD266C211A37EF00B856E7 /* GameViewController.swift in Sources */,
+				A028C3F5211CD5D600C3FCC5 /* MenuScene.swift in Sources */,
 				A06C3AD7211B908A00DEF78B /* Settings.swift in Sources */,
 				A0FD2664211A37EF00B856E7 /* AppDelegate.swift in Sources */,
 			);
