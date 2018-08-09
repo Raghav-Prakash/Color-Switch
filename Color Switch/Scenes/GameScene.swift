@@ -8,15 +8,32 @@
 
 import SpriteKit
 
+//MARK: - 2 enums: one for all the 4 actual colors of the colorCircle and the other for the state of the colorCircle (which color is at the top)
+enum BallColors {
+	static let colors = [
+		UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0),
+		UIColor(red: 241/255, green: 196/255, blue: 15/255, alpha: 1.0),
+		UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1.0),
+		UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1.0)
+	]
+}
+enum ColorSwitchState : Int {
+	case red, yellow, green, blue
+}
+
 class GameScene: SKScene {
 	
-	//MARK: - Declare spriteNode instances
+	//MARK: - Declare spriteNode instances and Game-logic related variables
 	let colorCircle = SKSpriteNode(imageNamed: "ColorCircle")
-	let ball = SKSpriteNode(imageNamed: "ball")
+	var ball : SKSpriteNode!
+	
+	var currentColorIndex : Int?
+	var currentColorSwitchState = ColorSwitchState.red.rawValue
 	
 	//MARK: - When moved to scene, layout scene with spritenodes.
     override func didMove(to view: SKView) {
 		setBackGroundColor(red: 44/255, green: 62/255, blue: 80/255)
+		
 		setUpColorCircleInView()
 		setUpBallInView()
 		
@@ -24,8 +41,6 @@ class GameScene: SKScene {
 		addPhysicsToBall()
 		
 		slowDownGravityInScene()
-		
-		addSpriteNodesToView()
 		
 		setSelfAsContactDelegate()
     }
@@ -37,10 +52,24 @@ class GameScene: SKScene {
 	func setUpColorCircleInView() {
 		colorCircle.size = CGSize(width: frame.size.width/3, height: frame.size.width/3)
 		colorCircle.position = CGPoint(x: frame.midX, y: frame.minY + colorCircle.size.height)
+		
+		// Add colorCircle to our scene view
+		self.addChild(colorCircle)
 	}
 	func setUpBallInView() {
-		ball.size = CGSize(width: 30.0, height: 30.0)
-		ball.position = CGPoint(x: frame.midX, y: frame.maxY - ball.size.height)
+		currentColorIndex = Int(arc4random_uniform(UInt32(4)))
+		ball = SKSpriteNode(texture: SKTexture(imageNamed: "ball"), color: BallColors.colors[currentColorIndex!], size: CGSize(width: 30.0, height: 30.0))
+		
+		ball.position = CGPoint(x: frame.midX, y: frame.maxY - ball!.size.height)
+		
+		// Make sure the color assigned is blended well into the ball
+		ball.colorBlendFactor = 1.0
+		
+		// Give a name to this ball to be used in the contact delegate
+		ball.name = "Ball"
+		
+		// Add ball to our scene view
+		self.addChild(ball)
 	}
 	
 	//MARK: - Set up the physics in the sprite nodes
@@ -52,7 +81,7 @@ class GameScene: SKScene {
 		colorCircle.physicsBody?.isDynamic = false
 	}
 	func addPhysicsToBall() {
-		ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2)
+		ball.physicsBody = SKPhysicsBody(circleOfRadius: (ball?.size.width)!/2)
 		ball.physicsBody!.categoryBitMask = PhysicsCategories.ballCategory
 		
 		// Have a check whether the ball has a contact with colorCircle but we prevent the ball from colliding with colorCircle
@@ -65,25 +94,50 @@ class GameScene: SKScene {
 		self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
 	}
 	
-	//MARK: - Add all the setup sprite nodes to the scene view
-	func addSpriteNodesToView() {
-		self.addChild(colorCircle)
-		self.addChild(ball)
-	}
-	
 	//MARK: - Set self view as the delegate for the physics contact protocol
 	func setSelfAsContactDelegate() {
 		self.physicsWorld.contactDelegate = self
+	}
+	
+	//MARK: - When user touches anywhere on screen, change the state of color on top of colorSwitch wheel and rotate it by 90 degrees
+	func turnColorSwitchWheel() {
+		currentColorSwitchState = (currentColorSwitchState + 1) % 4
+		
+		colorCircle.run(SKAction.rotate(byAngle: .pi/2, duration: 0.25))
+	}
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		turnColorSwitchWheel()
+	}
+	
+	//MARK: - When the ball color and colorSwitch color don't match
+	func gameOver() {
+		print("Wrong")
 	}
 }
 
 extension GameScene : SKPhysicsContactDelegate {
 	
 	func didBegin(_ contact: SKPhysicsContact) {
-		let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask // bodyA : ball, bodyB : colorCircle
+		let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
 		
 		if contactMask == PhysicsCategories.ballCategory | PhysicsCategories.switchCategory {
-			print("Ball has made contact with the colorCircle")
+			// Before checking if the colors contacting are matching, we check if the contacting object is our "ball".
+			// And if so, which object is our "ball" (bodyA or bodyB)
+			if let ball = contact.bodyA.node?.name == "ball" ? contact.bodyA.node : contact.bodyB.node {
+				if currentColorSwitchState == currentColorIndex {
+					print("Correct")
+					
+					// Fade out the ball and when that's done, de-initialize the ball and re-initialize a new one.
+					ball.run(SKAction.fadeOut(withDuration: 0.25), completion: {
+						ball.removeFromParent()
+						
+						self.setUpBallInView()
+						self.addPhysicsToBall()
+					})
+				} else {
+					gameOver()
+				}
+			}
 		}
 	}
 }
