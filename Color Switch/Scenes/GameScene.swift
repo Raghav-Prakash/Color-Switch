@@ -123,8 +123,13 @@ class GameScene: SKScene {
 	
 	//MARK: - When the ball color and colorSwitch color don't match
 	func gameOver() {
-		scoreLabel.fontSize = CGFloat(30.0)
-		scoreLabel.text = "YOUR FINAL SCORE IS \(score)"
+		UserDefaults.standard.set(score, forKey: "RecentScore")
+		if score > UserDefaults.standard.integer(forKey: "HighScore") {
+			UserDefaults.standard.set(score, forKey: "HighScore")
+		}
+		
+		let menuScene = MenuScene(size: view!.bounds.size)
+		view!.presentScene(menuScene)
 	}
 	
 	///MARK: - Set up score label on scene

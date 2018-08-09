@@ -39,13 +39,13 @@ class MenuScene: SKScene {
 		playLabel.position = CGPoint(x: frame.midX, y: frame.midY)
 		self.addChild(playLabel)
 		
-		let highestScoreLabel = SKLabelNode(text: "High Score: ")
+		let highestScoreLabel = SKLabelNode(text: "High Score: \(UserDefaults.standard.integer(forKey: "HighScore"))")
 		highestScoreLabel.fontName = "AvenirNext-Bold"
 		highestScoreLabel.fontSize = CGFloat(30.0)
 		highestScoreLabel.position = CGPoint(x: frame.midX, y: frame.midY - highestScoreLabel.frame.size.height*4)
 		self.addChild(highestScoreLabel)
 		
-		let recentScoreLabel = SKLabelNode(text: "Recent Score: ")
+		let recentScoreLabel = SKLabelNode(text: "Recent Score: \(UserDefaults.standard.integer(forKey: "RecentScore"))")
 		recentScoreLabel.fontName = "AvenirNext-Bold"
 		recentScoreLabel.fontSize = CGFloat(30.0)
 		recentScoreLabel.position = CGPoint(x: frame.midX, y: highestScoreLabel.position.y - recentScoreLabel.frame.size.height*2)
@@ -54,7 +54,7 @@ class MenuScene: SKScene {
 	
 	//MARK: - Touch anywhere to play (bring up GameScene when user touches anywhere on MenuScene screen)
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		let scene = GameScene(size: view!.bounds.size)
-		view!.presentScene(scene)
+		let gameScene = GameScene(size: view!.bounds.size)
+		view!.presentScene(gameScene)
 	}
 }
