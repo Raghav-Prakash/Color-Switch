@@ -23,12 +23,17 @@ enum ColorSwitchState : Int {
 
 class GameScene: SKScene {
 	
-	//MARK: - Declare spriteNode instances and Game-logic related variables
+	//MARK: - Declare spriteNode instances
 	let colorCircle = SKSpriteNode(imageNamed: "ColorCircle")
 	var ball : SKSpriteNode!
 	
+	//MARK: - Declare Game-logic related variables
 	var currentColorIndex : Int?
 	var currentColorSwitchState = ColorSwitchState.red.rawValue
+	
+	//MARK: - Declare score-related variables
+	let scoreLabel = SKLabelNode(text: "0")
+	var score = 0
 	
 	//MARK: - When moved to scene, layout scene with spritenodes.
     override func didMove(to view: SKView) {
@@ -42,6 +47,8 @@ class GameScene: SKScene {
 		
 		slowDownGravityInScene()
 		
+		setUpScoreLabel()
+		
 		setSelfAsContactDelegate()
     }
 	
@@ -52,6 +59,8 @@ class GameScene: SKScene {
 	func setUpColorCircleInView() {
 		colorCircle.size = CGSize(width: frame.size.width/3, height: frame.size.width/3)
 		colorCircle.position = CGPoint(x: frame.midX, y: frame.minY + colorCircle.size.height)
+		
+		colorCircle.zPosition = ZPositions.colorCircleZ.rawValue
 		
 		// Add colorCircle to our scene view
 		self.addChild(colorCircle)
@@ -67,6 +76,9 @@ class GameScene: SKScene {
 		
 		// Give a name to this ball to be used in the contact delegate
 		ball.name = "Ball"
+		
+		// Set Z-Position of ball
+		ball.zPosition = ZPositions.ballZ.rawValue
 		
 		// Add ball to our scene view
 		self.addChild(ball)
@@ -111,7 +123,24 @@ class GameScene: SKScene {
 	
 	//MARK: - When the ball color and colorSwitch color don't match
 	func gameOver() {
-		print("Wrong")
+		scoreLabel.fontSize = CGFloat(30.0)
+		scoreLabel.text = "YOUR FINAL SCORE IS \(score)"
+	}
+	
+	///MARK: - Set up score label on scene
+	func setUpScoreLabel() {
+		scoreLabel.fontName = "AvenirNext-Bold"
+		scoreLabel.fontSize = CGFloat(60.0)
+		scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY)
+		
+		scoreLabel.zPosition = ZPositions.scoreZ.rawValue
+		
+		self.addChild(scoreLabel)
+	}
+	
+	//MARK: - When the ball color and colorSwitch color match, update score
+	func updateScoreLabel(with score: Int) {
+		scoreLabel.text = "\(score)"
 	}
 }
 
@@ -125,7 +154,8 @@ extension GameScene : SKPhysicsContactDelegate {
 			// And if so, which object is our "ball" (bodyA or bodyB)
 			if let ball = contact.bodyA.node?.name == "ball" ? contact.bodyA.node : contact.bodyB.node {
 				if currentColorSwitchState == currentColorIndex {
-					print("Correct")
+					score += 1
+					updateScoreLabel(with: score)
 					
 					// Fade out the ball and when that's done, de-initialize the ball and re-initialize a new one.
 					ball.run(SKAction.fadeOut(withDuration: 0.25), completion: {

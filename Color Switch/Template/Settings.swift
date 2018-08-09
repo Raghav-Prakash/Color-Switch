@@ -13,3 +13,7 @@ enum PhysicsCategories {
 	static let ballCategory : UInt32 = 0x1 			// 01
 	static let switchCategory : UInt32 = 0x1 << 1 	// 10
 }
+
+enum ZPositions : CGFloat {
+	case scoreZ, ballZ, colorCircleZ
+}
